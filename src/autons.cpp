@@ -240,7 +240,7 @@ void interfered_example() {
 void fiveballwp() {
   // Intake First Ball
   setIntake(100);
-  chassis.set_drive_pid(15, 90, true);
+  chassis.set_drive_pid(15, 90);
   chassis.wait_drive();
   pros::delay(200);
   // Back Out to Match Loader
@@ -250,21 +250,56 @@ void fiveballwp() {
   chassis.wait_drive();
   setIntake(0);
   // Turn next to the Bar
-  chassis.set_swing_pid(ez::RIGHT_SWING, 45, TURN_SPEED);
+  chassis.set_swing_pid(ez::RIGHT_SWING, 45, SWING_SPEED);
   chassis.wait_drive();
   // Back up to pull triball out of match loader
-  chassis.set_drive_pid(-5, DRIVE_SPEED, true);
+  chassis.set_drive_pid(-5, DRIVE_SPEED);
   chassis.wait_drive();
   wingControl(true);
   // pull ball out
   chassis.set_drive_pid(-11, 127);
   chassis.wait_drive();
   // Turn to goal
-  chassis.set_swing_pid(ez::RIGHT_SWING, 90, TURN_SPEED);
+  chassis.set_swing_pid(ez::RIGHT_SWING, 90, SWING_SPEED);
   chassis.wait_drive();
   // Push into Goal and drive forward
   chassis.set_drive_pid(-18, 127);
   chassis.wait_drive();
-  chassis.set_drive_pid(6, DRIVE_SPEED, true);
+  chassis.set_drive_pid(6, DRIVE_SPEED);
   chassis.wait_drive();
+}
+
+void rigoExample(){
+
+    chassis.set_drive_pid(2, DRIVE_SPEED);
+    chassis.wait_drive();
+    chassis.set_drive_pid(-2, DRIVE_SPEED);
+    setIntake(100);
+    chassis.wait_drive();
+    chassis.set_turn_pid(90, TURN_SPEED);
+    chassis.wait_drive();
+    chassis.set_turn_pid(80, TURN_SPEED);
+    chassis.wait_drive();
+    chassis.set_swing_pid( ez::RIGHT_SWING, 145, SWING_SPEED);
+    chassis.wait_drive();
+
+
+    chassis.set_drive_pid(4, 50);
+    chassis.wait_drive();
+    chassis.set_drive_pid(16, 127);
+
+
+    chassis.set_drive_pid(20, 50);
+    chassis.wait_until(4);
+    chassis.set_max_speed(127);
+
+
+    chassis.set_drive_pid(50, DRIVE_SPEED);
+    chassis.wait_until(10);
+    wingControl(true); 
+    chassis.wait_until(25);
+    wingControl(false);
+    chassis.wait_drive();
+
+
 }
