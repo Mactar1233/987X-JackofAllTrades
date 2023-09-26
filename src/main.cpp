@@ -164,7 +164,7 @@ void opcontrol() {
     chassis.tank(); // Tank control
     intakeControl();
     slapperControl();
-    wingControl();
+    wingTeleControl();
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade
