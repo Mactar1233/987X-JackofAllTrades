@@ -254,23 +254,30 @@ void interfered_example() {
 // . . .
 
 void fiveballwp(){
+  //Intake First Ball
   setIntake(100);
   chassis.set_drive_pid(15, 70,true);
   chassis.wait_drive();
+  //Back Out to Match Loader
   chassis.set_drive_pid(-47.3, 40, true);
   chassis.wait_until(-17);
   chassis.set_max_speed(DRIVE_SPEED);
   chassis.wait_drive();
   setIntake(0);
+  //Turn next to the Bar
   chassis.set_swing_pid(ez::RIGHT_SWING,45, TURN_SPEED);
   chassis.wait_drive();
+  //Back up to pull triball out of match loader
   chassis.set_drive_pid(-5, DRIVE_SPEED, true);
   chassis.wait_drive();
   wingControl(true);
+  //pull ball out
   chassis.set_drive_pid(-11, 127);
   chassis.wait_drive();
+  //Turn to goal
   chassis.set_swing_pid(ez::RIGHT_SWING,90, TURN_SPEED);
   chassis.wait_drive();
+  //Push into Goal and drive forward
   chassis.set_drive_pid(-18, 127);
   chassis.wait_drive();
   chassis.set_drive_pid(6, DRIVE_SPEED, true);
