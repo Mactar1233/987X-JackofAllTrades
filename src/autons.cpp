@@ -406,7 +406,6 @@ void awpStealD(){
   chassis.set_drive_pid( 9, 127);
   setIntake(-100);
   chassis.wait_drive();
-  setIntake(0);
   chassis.set_drive_pid(-7, DRIVE_SPEED);
   chassis.wait_drive();
   setIntake(100);
@@ -416,14 +415,14 @@ void awpStealD(){
   chassis.wait_drive();
   chassis.set_turn_pid(90,TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(11.5, DRIVE_SPEED);
+  chassis.set_drive_pid(11, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_turn_pid(0 , TURN_SPEED);
   chassis.wait_drive();
   chassis.set_drive_pid(20, 80);
   chassis.wait_drive();
+  chassis.set_drive_pid(-15, DRIVE_SPEED);
   setIntake(0);
-  chassis.set_drive_pid(-17, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_turn_pid(90, TURN_SPEED);
   chassis.wait_drive();
@@ -431,24 +430,26 @@ void awpStealD(){
   chassis.set_drive_pid(20, 127);
  chassis.wait_drive();
   setIntake(0);
-  chassis.set_drive_pid(-15, DRIVE_SPEED);
+  chassis.set_drive_pid(-10, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_turn_pid(45, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(-35, DRIVE_SPEED);
+  chassis.set_drive_pid(-43.5, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_swing_pid(ez:: RIGHT_SWING, 135, SWING_SPEED);
   wingControl(true);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(26, DRIVE_SPEED);
+  chassis.set_drive_pid(23, DRIVE_SPEED);
   chassis.wait_drive();
-  chassis.set_swing_pid(ez::LEFT_SWING, 105, SWING_SPEED);
+  chassis.set_swing_pid(ez::LEFT_SWING, 87, SWING_SPEED);
   chassis.wait_drive();
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+chassis.wait_drive();
   wingControl(false);
   chassis.set_turn_pid(270, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(-45, DRIVE_SPEED);
+  chassis.set_drive_pid(-38.5, DRIVE_SPEED);
 
  
 
@@ -470,11 +471,13 @@ void skills(){
     chassis.wait_drive();
     chassis.set_swing_pid(ez::LEFT_SWING, -20, SWING_SPEED);
     chassis.wait_drive();
+    wingControl(true);
    
-    //matchLoad(true);
-    //pros::delay(35000);
-    //matchLoad(false);
+    matchLoad(true);
+    pros::delay(35000);
+    matchLoad(false);
     
+    wingControl(false);
     chassis.set_swing_pid(ez::LEFT_SWING, 45, SWING_SPEED);
     chassis.wait_drive();
     chassis.set_drive_pid(-13, DRIVE_SPEED);
@@ -562,6 +565,61 @@ void skills(){
 
   
 
+}
+
+void threeballAWP() {
+  // Intake First Ball
+  setIntake(100);
+  chassis.set_drive_pid(15, 90);
+  chassis.wait_drive();
+  pros::delay(200);
+  // Back Out to Match Loader
+  chassis.set_drive_pid(-43, 45, true);
+  chassis.wait_until(-10);
+  chassis.set_max_speed(70);
+  chassis.wait_drive();
+  setIntake(0);
+  // Turn next to the Bar
+  chassis.set_swing_pid(ez::LEFT_SWING, -45, SWING_SPEED);
+  chassis.wait_drive();
+  // Back up to pull triball out of match loader
+  chassis.set_drive_pid(-5, DRIVE_SPEED);
+  chassis.wait_drive();
+  wingControl(true);
+  // pull ball out
+  chassis.set_drive_pid(-11.5, 127);
+  chassis.wait_drive();
+  // Turn to goal
+  chassis.set_swing_pid(ez::LEFT_SWING, -90, SWING_SPEED);
+  chassis.wait_drive();
+  // Push into Goal and drive forward
+  chassis.set_drive_pid(-15.5, 127);
+  chassis.wait_drive();
+  chassis.set_drive_pid(11, DRIVE_SPEED);
+  chassis.wait_drive();
+  wingControl(false);
+  chassis.set_turn_pid( 90,  TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(15, 127);
+  setIntake(-100);
+  chassis.wait_drive();
+  pros::delay(200);
+  chassis.set_drive_pid(-7, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-90, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-14, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(16.8,DRIVE_SPEED);
+  chassis.wait_drive();
+  setIntake(0);
+chassis.set_turn_pid(-45, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(20, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(180, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(-38, DRIVE_SPEED);
 }
 
 

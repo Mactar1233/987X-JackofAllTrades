@@ -20,6 +20,7 @@ void modified_exit_condition();
 
 void fourpointfive();
 void fourpointfivefixed();
+void threeballAWP();
 void allianceStealD();
 void awpStealD();
 void skills();
