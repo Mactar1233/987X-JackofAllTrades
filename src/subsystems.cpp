@@ -7,7 +7,10 @@ pros::Motor catapult(1, pros::E_MOTOR_GEARSET_36, false,
 pros::Motor Intake(11, pros::E_MOTOR_GEARSET_06, false,
                    pros::E_MOTOR_ENCODER_DEGREES);
 pros::ADIDigitalOut wingActuation('A');
+pros::ADIDigitalOut blockerActuation('B');
+
 bool climberLock = false;
+bool blockerState = false;
 int Rumblecount = 0;
 bool drivermatchloading = false;
 
@@ -17,7 +20,7 @@ void wingControl(bool state) { wingActuation.set_value(state); }
 
 void matchLoad(bool matchLoading) {
   if (matchLoading == true) {
-    catapult.move_voltage(12000);
+    catapult.move_voltage(10000);
   } else {
     catapult.move_voltage(0);
   }
@@ -38,17 +41,13 @@ void intakeControl() {
 }
 
 void wingTeleControl() {
-  if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
-    climberLock = !climberLock;
-  }
-
-  if (climberLock == true) {
-    Rumblecount++;
-    wingControl(true);
-    if (Rumblecount == 5) {
-      master.rumble("...");
-    }
-  } else {
     wingControl(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2));
   }
+
+void blockerTeleControl(){
+  if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
+    blockerState = !blockerState;
+  }
+
+  blockerActuation.set_value(blockerState);
 }

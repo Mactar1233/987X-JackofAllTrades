@@ -79,7 +79,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("3 Ball Offensive Side + AWP\n\nScores 3 balls in own goal + touch bar", threeballAWP),
+    Auton("3 Ball Offensive Side + AWP\n\nScores 3 balls in own goal + touch bar", skills),
     Auton("1.75 Ball Defensive Side + AWP\n\nScores 1 ball in opposite goal and launches one over + descore + touch bar", awpStealD),
     Auton("4.5 Ball Offensive Side\n\n Scores 4 balls in own goal + intakes one extra for driver", fourpointfivefixed),
     Auton("1.75 Ball Defensive Side\n\nScores 1 ball in opposite goal and launches one over", allianceStealD),
@@ -166,6 +166,7 @@ void opcontrol() {
     intakeControl();
     slapperControl();
     wingTeleControl();
+    blockerTeleControl();
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade

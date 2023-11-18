@@ -24,3 +24,4 @@ void threeballAWP();
 void allianceStealD();
 void awpStealD();
 void skills();
+void sixballauton();
