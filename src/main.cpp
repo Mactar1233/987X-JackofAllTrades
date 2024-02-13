@@ -13,18 +13,18 @@
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-2, 3, -4}
+  {-1 ,-5, -14}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{12, 13, -14}
+  ,{10, 9, 18}
 
   // IMU Port
-  ,15
+  ,16
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
-  ,3.25
+  ,2.75
 
   // Cartridge RPM
   //   (or tick per rotation if using tracking wheels)
@@ -34,7 +34,7 @@ Drive chassis (
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,1.5
+  ,1.333333
 
   // Uncomment if using tracking wheels
   /*
@@ -79,9 +79,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("3 Ball Offensive Side + AWP\n\nScores 3 balls in own goal + touch bar", skills),
-    Auton("1.75 Ball Defensive Side + AWP\n\nScores 1 ball in opposite goal and launches one over + descore + touch bar", awpStealD),
-    Auton("4.5 Ball Offensive Side\n\n Scores 4 balls in own goal + intakes one extra for driver", fourpointfivefixed),
+    Auton("6 Ball Offensive Side\n\nsix shoota + kinda don't work",  skills ),
+    Auton("safe + AWP\n\nScores 1 ball in opposite goal and launches one over + descore + touch bar + don't work", SafedefensiveAWP),
+    Auton("risky awp/3 ball elims\n\n Kinda works", riskyAWPDefense),
     Auton("1.75 Ball Defensive Side\n\nScores 1 ball in opposite goal and launches one over", allianceStealD),
     Auton("Skills\n\nScores match loads + wing pushes", skills),
   });
@@ -167,6 +167,8 @@ void opcontrol() {
     slapperControl();
     wingTeleControl();
     blockerTeleControl();
+    chomperTelecontrol();
+    BwingTeleControl();
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade

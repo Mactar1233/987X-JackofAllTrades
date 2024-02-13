@@ -4,6 +4,7 @@
 #include "main.h"
 #include "pros/rtos.h"
 #include "pros/rtos.hpp"
+#include "pros/vision.h"
 #include <fstream>
 #include <mutex>
 
@@ -304,61 +305,62 @@ void fourpointfive() {
 void fourpointfivefixed() {
   // Intake First Ball
   setIntake(100);
-  chassis.set_drive_pid(15, 90);
+  chassis.set_drive_pid(12, DRIVE_SPEED);
   chassis.wait_drive();
   pros::delay(200);
   // Back Out to Match Loader
-  chassis.set_drive_pid(-43, 45, true);
+  chassis.set_drive_pid(-38, 45, true);
   chassis.wait_until(-10);
   chassis.set_max_speed(70);
   chassis.wait_drive();
-  setIntake(0);
   // Turn next to the Bar
-  chassis.set_swing_pid(ez::LEFT_SWING, -45, SWING_SPEED);
+  chassis.set_turn_pid(-45, TURN_SPEED);
   chassis.wait_drive();
+  BwingControl(true); 
+
   // Back up to pull triball out of match loader
-  chassis.set_drive_pid(-5, DRIVE_SPEED);
+
+  chassis.set_drive_pid(-24, 90);
   chassis.wait_drive();
-  wingControl(true);
-  // pull ball out
-  chassis.set_drive_pid(-11.5, 127);
+  BwingControl(false);
+  chassis.set_drive_pid(5, DRIVE_SPEED);
   chassis.wait_drive();
-  // Turn to goal
-  chassis.set_swing_pid(ez::LEFT_SWING, -90, SWING_SPEED);
+  chassis.set_drive_pid(-10,DRIVE_SPEED);
   chassis.wait_drive();
-  // Push into Goal and drive forward
-  chassis.set_drive_pid(-13.5, 127);
+  chassis.set_turn_pid(90, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(11, DRIVE_SPEED);
-  chassis.wait_drive();
-  wingControl(false);
-  chassis.set_turn_pid( 90,  TURN_SPEED);
-  chassis.wait_drive();
-  chassis.set_drive_pid(13, 127);
   setIntake(-100);
+  chassis.set_drive_pid(20, 127);
   chassis.wait_drive();
-  pros::delay(200);
-  chassis.set_drive_pid(-7, DRIVE_SPEED);
+  chassis.set_drive_pid(-16, DRIVE_SPEED);
   chassis.wait_drive();
-  chassis.set_turn_pid(-90, TURN_SPEED);
+  chassis.set_turn_pid(23, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(-14, DRIVE_SPEED);
-  chassis.wait_drive();
-  chassis.set_drive_pid(16.8,DRIVE_SPEED);
-  chassis.wait_drive();
-  chassis.set_turn_pid(-315.6, TURN_SPEED);
+  chassis.set_drive_pid(54, 127);
+  
+  
   chassis.wait_drive();
   setIntake(100);
-  chassis.set_drive_pid(62, DRIVE_SPEED);
-  chassis.wait_until(50);
-  chassis.set_max_speed(60);
+  chassis.set_turn_pid(157, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_swing_pid(ez::RIGHT_SWING,-360, 45);
+
+  chassis.set_drive_pid(15, DRIVE_SPEED);
+  setIntake(-100);
   chassis.wait_drive();
-  chassis.set_drive_pid(2, DRIVE_SPEED);
+  chassis.set_turn_pid(45, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(17, DRIVE_SPEED);
+  chassis.wait_drive();
+  setIntake(100);
+  chassis.set_swing_pid(ez::RIGHT_SWING, 0, SWING_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(1.2, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(180, DRIVE_SPEED);
   chassis.wait_drive();
   wingControl(true);
-  chassis.set_drive_pid(-35, 127);
+  setIntake(-100);
+  chassis.set_drive_pid(38, 127);
 
 }
 
@@ -400,18 +402,25 @@ void allianceStealD(){
 }
 
 void awpStealD(){
-  chassis.set_drive_pid(52, DRIVE_SPEED, true);
-  chassis.wait_drive();
-  chassis.set_turn_pid(-90, TURN_SPEED);  
-  chassis.wait_drive();
-  chassis.set_drive_pid( 9, 127);
-  setIntake(-100);
-  chassis.wait_drive();
-  chassis.set_drive_pid(-7, DRIVE_SPEED);
-  chassis.wait_drive();
   setIntake(100);
+  blockerControl(true);
+pros::delay(50);
+blockerControl(false);
+  chassis.set_drive_pid(51, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-90, TURN_SPEED); 
+  chassis.wait_drive();
+      setIntake(-100);
+
+  chassis.set_drive_pid( 13, 127);
+  blockerControl(true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-9, DRIVE_SPEED);
+  chassis.wait_drive();
+  blockerControl(false);
   chassis.set_turn_pid(0, TURN_SPEED);
   chassis.wait_drive();
+    setIntake(100);
   chassis.set_drive_pid(-11, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_turn_pid(90,TURN_SPEED);
@@ -420,38 +429,41 @@ void awpStealD(){
   chassis.wait_drive();
   chassis.set_turn_pid(0 , TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(21, 80);
+  chassis.set_drive_pid(17, 80);
   chassis.wait_drive();
   chassis.set_drive_pid(-16, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_turn_pid(90, TURN_SPEED);
   chassis.wait_drive();
-  setIntake(-100);
-  chassis.set_drive_pid(20, 127);
+  chassis.set_drive_pid(19, 127);
+    setIntake(-100);
+
  chassis.wait_drive();
   setIntake(0);
   chassis.set_drive_pid(-10, DRIVE_SPEED);
   chassis.wait_drive();
   chassis.set_turn_pid(45, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(-43, DRIVE_SPEED);
+  chassis.set_drive_pid(-36.5, DRIVE_SPEED);
   chassis.wait_drive();
-  chassis.set_swing_pid(ez:: RIGHT_SWING, 135, SWING_SPEED);
+  chassis.set_swing_pid(ez:: LEFT_SWING, -30, SWING_SPEED);
   chassis.wait_drive();
       wingControl(true);
 
 
-  chassis.set_drive_pid(23, DRIVE_SPEED);
+  chassis.set_drive_pid(-5.5, DRIVE_SPEED);
   chassis.wait_drive();
 
-  chassis.set_swing_pid(ez::LEFT_SWING, 87, SWING_SPEED);
+  chassis.set_swing_pid(ez::LEFT_SWING, -90, SWING_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.set_drive_pid(6, 127);
+  chassis.wait_drive();
+    wingControl(false);
+
+    chassis.set_drive_pid(-35, DRIVE_SPEED);
 chassis.wait_drive();
-  wingControl(false);
-  chassis.set_turn_pid(270, TURN_SPEED);
-  chassis.wait_drive();
-  chassis.set_drive_pid(-38.5, DRIVE_SPEED);
+  
+  blockerControl(true);
 
  
 
@@ -465,134 +477,55 @@ void skills(){
     pros::delay(500);
     wingControl(false);
     chassis.wait_drive();
-    chassis.set_drive_pid(-1.5, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_swing_pid(ez::RIGHT_SWING, 45, SWING_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-1.5, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_swing_pid(ez::LEFT_SWING, -20, SWING_SPEED);
-    chassis.wait_drive();
-    wingControl(true);
-   
-   matchLoad(true);
-   pros::delay(31000);
-    matchLoad(false);
-    
-    wingControl(false);
-    chassis.set_swing_pid(ez::LEFT_SWING, 45, SWING_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-13, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(90, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-10, 127);
-    chassis.wait_drive();
-   
-    chassis.set_drive_pid(10, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(30, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(38, DRIVE_SPEED);
-    chassis.wait_drive();
-
-   setIntake(-100);
-    chassis.set_turn_pid(0, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(67.5, DRIVE_SPEED);
-    chassis.wait_drive();
-   // chassis.set_turn_pid(-45, TURN_SPEED);
-   // chassis.wait_drive();
-   // chassis.set_drive_pid(13, DRIVE_SPEED);
-   // chassis.wait_drive();
-    
-
-    setIntake(0);
-    chassis.set_turn_pid(-120, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(67.5, DRIVE_SPEED);
-    chassis.wait_drive();
-
-    chassis.set_turn_pid(-180, TURN_SPEED);
-    chassis.wait_drive();
-
-    wingControl(true);
-    chassis.set_drive_pid(-35, 127);
-    chassis.wait_drive();
-
-  
-
-    chassis.wait_drive();
-    wingControl(false);
-
-   
-
-   chassis.set_drive_pid(32, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(-90, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(36,DRIVE_SPEED);
-    chassis.wait_drive();
-
-    chassis.set_turn_pid(-135, TURN_SPEED);
-    chassis.wait_drive();
-    wingControl(true);
-    chassis.set_drive_pid(-35, 127);
-    chassis.wait_drive();
-    chassis.set_swing_pid(LEFT_SWING, -180, SWING_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-5, 127);
-    chassis.wait_drive();
-    wingControl(false);
-
-    chassis.set_drive_pid(37.5, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(-270, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(43, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(-225, TURN_SPEED);
-    chassis.wait_drive();
-    wingControl(true);
-    chassis.set_drive_pid(-40, 127);
-    chassis.wait_drive();
-    chassis.set_swing_pid(RIGHT_SWING, -180, SWING_SPEED);
-   
-    chassis.wait_drive();
-    wingControl(false);
-    chassis.set_drive_pid(3, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(-270, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(52, DRIVE_SPEED);
-    chassis.wait_drive();
-    chassis.set_turn_pid(-225, TURN_SPEED);
-    wingControl(true);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-30, 127);
-    chassis.wait_drive();
-    wingControl(false);
-    chassis.set_turn_pid(-270, TURN_SPEED);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-20, 127);
-    chassis.wait_drive();
-    chassis.set_drive_pid(15, 127);
-    chassis.wait_drive();
-    chassis.set_drive_pid(-15, 127);
+  setIntake(-100);
+  chassis.set_turn_pid(-45,TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_swing_pid(ez::LEFT_SWING, 70, SWING_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-10, DRIVE_SPEED);
+  BwingControl(true);
+  chassis.wait_drive();
+  BwingControl(false);
+  chassis.set_turn_pid( 180, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-8, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(135, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(25, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(270, TURN_SPEED);
+  chassis.wait_drive();
+  //goes thorugh lane
+  chassis.set_drive_pid(-80, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(225, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-30, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(180, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-10,DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-13, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(7, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(270, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(25, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_swing_pid(ez::RIGHT_SWING, 315, SWING_SPEED);
+  chassis.wait_drive();
 
 
 
-    
-    
-  
-    
-
-
-
-
-    
-
-  
 
 }
 
@@ -652,71 +585,359 @@ chassis.set_drive_pid(-38, DRIVE_SPEED);
 }
 
 void sixballauton() {
+blockerControl(true);
+pros::delay(50);
+blockerControl(false);
 wingControl(true);
-pros::delay(250);
+pros::delay(350);
 wingControl(false);
 //pointing at middle ball
  chassis.set_drive_pid(64,DRIVE_SPEED);
  chassis.wait_drive();
- chassis.set_swing_pid(ez::RIGHT_SWING,  -45, SWING_SPEED);
+ chassis.set_turn_pid(-45, SWING_SPEED);
+ setIntake(100);
  chassis.wait_drive();
  chassis.set_angle(0);
- setIntake(100);
- chassis.set_drive_pid(2, DRIVE_SPEED);
+ chassis.set_drive_pid(3, 127);
  chassis.wait_drive();
  //reverse to smack both ball in 
- chassis.set_drive_pid(-1, DRIVE_SPEED);
- chassis.wait_drive();
- //turn robot to outake
  chassis.set_turn_pid(180, TURN_SPEED);
  chassis.wait_drive();
- setIntake(-100);
- chassis.set_drive_pid(3, DRIVE_SPEED);
- chassis.wait_drive();
-chassis.set_turn_pid(0, TURN_SPEED);
- chassis.wait_drive();
-wingControl(true);
- chassis.set_drive_pid(-30,127);
+ //turn robot to outake
+ wingControl(true);
+ setIntake(-50);
+ chassis.set_drive_pid(29, DRIVE_SPEED);
  chassis.wait_drive();
  wingControl(false);
- //3rd ball
- chassis.set_turn_pid(-30, TURN_SPEED);
- chassis.wait_drive();
- chassis.set_drive_pid(33, DRIVE_SPEED);
- chassis.wait_drive();
- chassis.set_turn_pid(-150, TURN_SPEED);
- chassis.wait_drive();
- setIntake(100);
- chassis.set_drive_pid(30, DRIVE_SPEED);
- setIntake(-100);
- //going for fourth
- chassis.wait_drive();
- chassis.set_turn_pid(-90, TURN_SPEED);
- chassis.wait_drive();
- chassis.set_drive_pid(26, DRIVE_SPEED);
- chassis.wait_drive();
- chassis.set_turn_pid(-10, TURN_SPEED);
- chassis.wait_drive();
- setIntake(100);
- chassis.set_drive_pid(30, DRIVE_SPEED);
- chassis.wait_drive();
- chassis.set_drive_pid(-35, DRIVE_SPEED);
- //corner ball thing
- chassis.wait_drive();
-chassis.set_turn_pid(-45,TURN_SPEED);
+chassis.set_turn_pid(-30, TURN_SPEED);
 chassis.wait_drive();
-chassis.set_drive_pid(-20, DRIVE_SPEED);
+chassis.set_drive_pid(33, DRIVE_SPEED);
+setIntake(100);
 chassis.wait_drive();
-wingControl(true);
-pros::delay(500);
-wingControl(false);
+setIntake(0);
+chassis.set_turn_pid(-150, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(36.5, DRIVE_SPEED);
+setIntake(-60);
+
+chassis.wait_drive();
+setIntake(0);
 chassis.set_turn_pid(-90, TURN_SPEED);
 chassis.wait_drive();
-chassis.set_drive_pid(-25, 127);
+chassis.set_drive_pid(19.5, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(0, TURN_SPEED);
+chassis.wait_drive();
+setIntake(100);
+chassis.set_drive_pid(36.5, 100);
+chassis.wait_drive();
+chassis.set_drive_pid(-35.5, 127);
+chassis.wait_drive();
+chassis.set_turn_pid(135, TURN_SPEED);
+chassis.wait_drive();
+wingControl(true);
+chassis.set_drive_pid(20,DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_swing_pid(ez::RIGHT_SWING,90, TURN_SPEED);
+wingControl(false);
+setIntake(-100);
+chassis.wait_drive();
+chassis.set_drive_pid(20, 127);
+
+
+
+
 
 }
 
+void threeballsave(){
+  blockerControl(true);
+pros::delay(50);
+blockerControl(false);
+wingControl(true);
+pros::delay(350);
+wingControl(false);
+//pointing at middle ball
+ chassis.set_drive_pid(64,DRIVE_SPEED);
+ chassis.wait_drive();
+ chassis.set_turn_pid(-45, SWING_SPEED);
+ setIntake(100);
+ chassis.wait_drive();
+ chassis.set_angle(0);
+ chassis.set_drive_pid(3, 127);
+ chassis.wait_drive();
+ //reverse to smack both ball in 
+ chassis.set_turn_pid(180, TURN_SPEED);
+ chassis.wait_drive();
+ //turn robot to outake
+ wingControl(true);
+ setIntake(-70);
+ chassis.set_drive_pid(35, DRIVE_SPEED);
+ chassis.wait_drive();
+ wingControl(false);
+ chassis.set_drive_pid(-30, DRIVE_SPEED);
+ chassis.wait_drive();
+ chassis.set_turn_pid(220, TURN_SPEED);
+ chassis.wait_drive();
+ setIntake(100);
+ chassis.set_drive_pid(45, DRIVE_SPEED);
+ chassis.wait_drive();
+ chassis.set_swing_pid(ez::RIGHT_SWING, 90, SWING_SPEED);
+ chassis.wait_drive();
+ setIntake(-100);
+ chassis.set_drive_pid(18, 127);
+ chassis.wait_drive();
+ chassis.set_drive_pid(-10, DRIVE_SPEED);
+ chassis.wait_drive();
+  chassis.set_drive_pid(18, 127);
+ chassis.wait_drive();
+ chassis.set_drive_pid(-10, DRIVE_SPEED);
+ chassis.wait_drive();
+ 
+}
 
+void mactar2Ball(){
+   setIntake(100);
+  blockerControl(true);
+pros::delay(50);
+blockerControl(false);
+  chassis.set_drive_pid(51, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-90, TURN_SPEED); 
+  chassis.wait_drive();
+      setIntake(-100);
+
+  chassis.set_drive_pid( 13, 127);
+  blockerControl(true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-9, DRIVE_SPEED);
+  chassis.wait_drive();
+  blockerControl(false);
+  chassis.set_turn_pid(0, TURN_SPEED);
+  chassis.wait_drive();
+    setIntake(100);
+  chassis.set_drive_pid(-11, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90,TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(11, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(0 , TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(17, 80);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-16, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_until(80);
+            setIntake(-100);
+
+  chassis.wait_drive();
+  chassis.set_drive_pid(13, 127);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-5, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(225, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(39, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_swing_pid(ez::LEFT_SWING, 315, SWING_SPEED);
+  chassis.wait_drive();
+    wingControl(true);
+
+  chassis.set_drive_pid(-10, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_swing_pid(ez::LEFT_SWING, 90, SWING_SPEED);
+ chassis.wait_drive();
+    chassis.set_drive_pid(3, DRIVE_SPEED);
+chassis.wait_drive();
+  chassis.set_swing_pid(ez::LEFT_SWING, -135, SWING_SPEED);
+  chassis.wait_drive();
+
+    wingControl(false);
+    chassis.set_turn_pid(270, DRIVE_SPEED);
+    chassis.wait_drive();
+
+
+
+  chassis.set_drive_pid(-30, DRIVE_SPEED);
+  chassis.wait_drive();
+
+ 
+}
+
+void DangerousDefensiveAWP(){
+
+  wingControl(true);
+  pros::delay(500);
+  wingControl(false);
+  chassis.set_drive_pid(43.5, 127);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, DRIVE_SPEED);
+  wingControl(true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(33, 127);
+  chassis.wait_drive();
+  wingControl(false);
+  chassis.set_turn_pid(45, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-57, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(135, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-20, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(180, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-5, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(10, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(315, TURN_SPEED);
+  chassis.wait_drive();
+  BwingControl(true);
+  chassis.set_drive_pid(-25, DRIVE_SPEED);
+  chassis.wait_drive();
+  BwingControl(false);
+  chassis.set_drive_pid(3, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-6, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(34.5, DRIVE_SPEED);
+
+
+}
+
+void SafedefensiveAWP(){
+  setIntake(100);
+    blockerControl(true);
+    pros::delay(200);
+    blockerControl(false);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-45,TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(25, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(0, TURN_SPEED);
+  chassis.wait_drive();
+  setIntake(-100);
+  chassis.set_drive_pid(-7, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(180, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-12.5, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(15, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(315, TURN_SPEED);
+  chassis.wait_drive();
+  BwingControl(true);
+  chassis.set_drive_pid(-18, DRIVE_SPEED);
+  chassis.wait_drive();
+  BwingControl(false);
+  chassis.set_drive_pid(5, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-9, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(36.5, DRIVE_SPEED);
+  chassis.wait_drive();
+  blockerControl(true);
+}
+
+void riskyAWPDefense(){
+wingControl(true);  
+pros::delay(150);
+setIntake(100);
+  chassis.wait_drive();
+  wingControl(false);
+  chassis.set_turn_pid(15, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(52, 127);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-52, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-45, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(34, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-180, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-5, DRIVE_SPEED);
+  chassis.wait_drive();
+ chassis.set_drive_pid(13, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(-45, TURN_SPEED);
+  chassis.wait_drive();
+  BwingControl(true);
+  chassis.set_drive_pid(-20, DRIVE_SPEED);
+  chassis.wait_drive();
+  BwingControl(false);
+  chassis.set_drive_pid(3, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-7, DRIVE_SPEED);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(3, DRIVE_SPEED);
+  setIntake(-100);
+  chassis.wait_drive();
+  chassis.set_turn_pid(90, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(36, DRIVE_SPEED);
+  chassis.wait_drive();
+  blockerControl(true);
+  
+
+
+
+
+}
+
+void SixBallR () {
+  setIntake(100);
+chassis.set_turn_pid(-35, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(63, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(90, TURN_SPEED);
+chassis.wait_drive();
+wingControl(true);
+setIntake(-100);
+chassis.set_drive_pid(36, DRIVE_SPEED);
+chassis.wait_drive();
+wingControl(false);
+chassis.set_drive_pid(-3, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(230, TURN_SPEED);
+chassis.wait_drive();
+setIntake(100);
+chassis.set_drive_pid(38,DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(300, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(-35, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(-315, TURN_SPEED);
+setIntake(-100);
+chassis.wait_drive();
+chassis.set_turn_pid(0, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(-15, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(270, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(18, DRIVE_SPEED);
+chassis.wait_drive();
+chassis.set_turn_pid(90, TURN_SPEED);
+chassis.wait_drive();
+chassis.set_drive_pid(10, DRIVE_SPEED);
+
+
+}
 void rigoExample(){
 
     chassis.set_drive_pid(2, DRIVE_SPEED);
